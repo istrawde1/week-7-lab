@@ -22,7 +22,12 @@ def fetch_location_data(geolocator, loc):
     location = geolocator.geocode(loc)
 
     if location is None:
-        return None
+        return {
+            "location": loc,
+            "latitude": None,
+            "longitude": None,
+            "type": None,
+        }
 
     return {
         "location": loc,
@@ -37,8 +42,6 @@ def build_geo_dataframe(geolocator, locations):
         fetch_location_data(geolocator, loc)
         for loc in locations
     ]
-
-    geo_data = [row for row in geo_data if row is not None]
 
     return pd.DataFrame(geo_data)
 
